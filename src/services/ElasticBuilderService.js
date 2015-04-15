@@ -113,14 +113,15 @@
             if (fieldData.subType === 'boolean') group.subType = 'boolean';
 
             if (! group.subType) return;
-            if (group.value === undefined) return;
             switch (group.subType) {
               case 'equals':
               case 'boolean':
+                if (group.value === undefined) return;
                 obj.term = {};
                 obj.term[fieldName] = group.value;
                 break;
               case 'notEquals':
+                if (group.value === undefined) return;
                 obj.not = { filter: { term: {}}};
                 obj.not.filter.term[fieldName] = group.value;
                 break;
