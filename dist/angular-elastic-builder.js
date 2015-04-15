@@ -2,7 +2,7 @@
  * # angular-elastic-builder
  * ## Angular Module for building an Elasticsearch Query
  *
- * @version v1.1.0
+ * @version v1.1.1
  * @link https://github.com/dncrews/angular-elastic-builder.git
  * @license MIT
  * @author Dan Crews <crewsd@gmail.com>
@@ -215,31 +215,6 @@
     }
 
   ]);
-
-})(window.angular);
-
-/**
- * angular-elastic-builder
- *
- * /src/ElasticBuilderPath.js
- *
- * This file is used to generate the path to the template files
- */
-
-(function(angular) {
-  'use strict';
-
-  angular.module('angular-elastic-builder')
-    .factory('elasticBuilderPath', function elasticBuilderPath() {
-
-      var filename = angular.element('script[src*=angular-elastic-builder').eq(0).attr('src');
-
-      var parts = filename.split('/');
-      parts.pop();
-      var path = parts.join('/');
-
-      return path;
-    });
 
 })(window.angular);
 
