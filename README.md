@@ -1,6 +1,7 @@
 # Angular Elasticsearch Query Builder
 
 [![NPM version][npm-image]][npm-url]
+![Bower version][bower-image]
 [![Downloads][downloads-image]][downloads-url]
 [![Tips][gratipay-image]][gratipay-url]
 
@@ -124,6 +125,7 @@ To work on this module locally, you will need to clone it and run `gulp watch`. 
 
 [npm-image]: https://img.shields.io/npm/v/angular-elastic-builder.svg
 [npm-url]: https://www.npmjs.org/package/angular-elastic-builder
+[bower-image]: https://img.shields.io/bower/v/angular-elastic-builder.svg
 [downloads-image]: https://img.shields.io/npm/dm/angular-elastic-builder.svg
 [downloads-url]: https://www.npmjs.org/package/angular-elastic-builder
 [gratipay-image]: https://img.shields.io/gratipay/dncrews.svg
