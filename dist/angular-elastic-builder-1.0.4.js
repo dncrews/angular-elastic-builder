@@ -1,6 +1,23 @@
 /**
  * angular-elastic-builder
  *
+ * /src/module.js
+ *
+ * Angular Module for building an Elasticsearch query
+ */
+
+(function(angular) {
+  'use strict';
+
+  angular.module('angular-elastic-builder', [
+    'RecursionHelper',
+  ]);
+
+})(window.angular);
+
+/**
+ * angular-elastic-builder
+ *
  * /src/ElasticBuilderChooser.js
  *
  * This file is to help recursively, to decide whether to show a group or rule
@@ -446,19 +463,3 @@
 $templateCache.put("angular-elastic-builder/ChooserDirective.html","<div\n  class=\"list-group-item elastic-builder-chooser\"\n  data-ng-class=\"getGroupClassName()\">\n\n  <div data-ng-if=\"item.type === \'group\'\"\n    data-elastic-builder-group=\"item\"\n    data-depth=\"{{ depth }}\"\n    data-elastic-fields=\"elasticFields\"\n    data-on-remove=\"onRemove()\"></div>\n\n  <div data-ng-if=\"item.type !== \'group\'\"\n    data-elastic-builder-rule=\"item\"\n    data-elastic-fields=\"elasticFields\"\n    data-on-remove=\"onRemove()\"></div>\n\n</div>\n");
 $templateCache.put("angular-elastic-builder/GroupDirective.html","<div class=\"elastic-builder-group\">\n  <h5>If\n    <select data-ng-model=\"group.subType\" class=\"form-control\">\n      <option value=\"and\">all</option>\n      <option value=\"or\">any</option>\n    </select>\n    of these conditions are met\n  </h5>\n  <div\n    data-ng-repeat=\"rule in group.rules\"\n    data-elastic-builder-chooser=\"rule\"\n    data-elastic-fields=\"elasticFields\"\n    data-depth=\"{{ +depth + 1 }}\"\n    data-on-remove=\"removeChild($index)\"></div>\n\n  <div class=\"list-group-item actions\">\n    <button class=\"btn btn-xs btn-primary\" title=\"Add Sub-Rule\" data-ng-click=\"addRule()\">\n      <i class=\"fa fa-plus\"></i>\n    </button>\n    <button class=\"btn btn-xs btn-primary\" title=\"Add Sub-Group\" data-ng-click=\"addGroup()\">\n      <i class=\"fa fa-list\"></i>\n    </button>\n  </div>\n\n  <button class=\"btn btn-xs btn-danger remover\" data-ng-click=\"onRemove()\">\n    <i class=\"fa fa-minus\"></i>\n  </button>\n</div>\n");
 $templateCache.put("angular-elastic-builder/RuleDirective.html","<div class=\"elastic-builder-rule\">\n  <select class=\"form-control\" data-ng-model=\"rule.field\" data-ng-options=\"key as key for (key, value) in elasticFields\"></select>\n\n  <span data-ng-if=\"elasticFields[rule.field].subType === \'boolean\'\">\n    Equals\n    <select data-ng-model=\"rule.value\" class=\"form-control\">\n      <option value=\"0\">False</option>\n      <option value=\"1\">True</option>\n    </select>\n  </span>\n  <span data-ng-if=\"elasticFields[rule.field].type === \'multi\'\">\n    <span data-ng-repeat=\"choice in elasticFields[rule.field].choices\">\n      <label class=\"checkbox state\">\n        <input type=\"checkbox\" data-ng-model=\"rule.values[choice]\">\n        {{ choice }}\n      </label>\n    </span>\n  </span>\n  <span data-ng-if=\"(elasticFields[rule.field].subType !== \'boolean\' && elasticFields[rule.field].type !== \'multi\')\">\n    <select data-ng-model=\"rule.subType\" class=\"form-control\">\n      <!-- Range Options -->\n      <optgroup label=\"Numeral\" data-ng-if=\"elasticFields[rule.field].type === \'number\'\">\n        <option value=\"equals\">=</option>\n        <option value=\"gt\">&gt;</option>\n        <option value=\"gte\">&ge;</option>\n        <option value=\"lt\">&lt;</option>\n        <option value=\"lte\">&le;</option>\n      </optgroup>\n\n      <!-- Term Options -->\n      <optgroup label=\"Text\" data-ng-if=\"elasticFields[rule.field].type === \'term\'\">\n        <option value=\"equals\">Equals</option>\n        <option value=\"notEquals\">! Equals</option>\n      </optgroup>\n\n      <!-- Generic Options -->\n      <optgroup label=\"Generic\">\n        <option value=\"exists\">Exists</option>\n        <option value=\"notExists\">! Exists</option>\n      </optgroup>\n\n    </select>\n\n\n    <!-- Range Fields -->\n    <input class=\"form-control\" data-ng-model=\"rule.value\" type=\"number\" data-ng-if=\"elasticFields[rule.field].type === \'number\'\">\n\n    <!-- Term Fields -->\n    <input class=\"form-control\" data-ng-model=\"rule.value\" type=\"text\" data-ng-if=\"([\'equals\',\'notEquals\'].indexOf(rule.subType) > -1) && (elasticFields[rule.field].type === \'term\')\">\n  </span>\n\n\n  <button class=\"btn btn-xs btn-danger remover\" data-ng-click=\"onRemove()\">\n    <i class=\"fa fa-minus\"></i>\n  </button>\n\n</div>\n");}]);})(window.angular);
-/**
- * angular-elastic-builder
- *
- * /src/module.js
- *
- * Angular Module for building an Elasticsearch query
- */
-
-(function(angular) {
-  'use strict';
-
-  angular.module('angular-elastic-builder', [
-    'RecursionHelper',
-  ]);
-
-})(window.angular);

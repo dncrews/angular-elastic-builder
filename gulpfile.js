@@ -26,7 +26,7 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('concat', [ 'clean', 'templatecache' ], function() {
-  return gulp.src('./src/*.js')
+  return gulp.src(['./src/module.js', './src/**/*.js'])
     .pipe(concat(filename))
     .pipe(gulp.dest('./dist'));
 });
@@ -49,7 +49,7 @@ gulp.task('templatecache', function() {
       templateFooter: TEMPLATE_FOOTER,
     }))
     .pipe(rename('ElasticBuilderTemplates.js'))
-    .pipe(gulp.dest('src'));
+    .pipe(gulp.dest('src/tmpl'));
 });
 
 gulp.task('watch', function() {
