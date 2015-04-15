@@ -55,7 +55,7 @@ $scope.elasticBuilderData.fields = {
 ```
 
 The above elasticFields would allow you create the following form:
-[![Screenshot][screenshot-image]]
+![Screenshot][screenshot-image]
 
 Which represents the following Elasticsearch Query:
 ```json
