@@ -1,0 +1,28 @@
+<div class="elastic-builder-group">
+  <h5>If
+    <select data-ng-model="group.subType" class="form-control">
+      <option value="and">all</option>
+      <option value="or">any</option>
+    </select>
+    of these conditions are met
+  </h5>
+  <div
+    data-ng-repeat="rule in group.rules"
+    data-elastic-builder-chooser="rule"
+    data-elastic-fields="elasticFields"
+    data-depth="{{ +depth + 1 }}"
+    data-on-remove="removeChild($index)"></div>
+
+  <div class="list-group-item actions">
+    <button class="btn btn-xs btn-primary" title="Add Sub-Rule" data-ng-click="addRule()">
+      <i class="fa fa-plus"></i>
+    </button>
+    <button class="btn btn-xs btn-primary" title="Add Sub-Group" data-ng-click="addGroup()">
+      <i class="fa fa-list"></i>
+    </button>
+  </div>
+
+  <button class="btn btn-xs btn-danger remover" data-ng-click="onRemove()">
+    <i class="fa fa-minus"></i>
+  </button>
+</div>

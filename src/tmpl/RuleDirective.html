@@ -1,0 +1,57 @@
+<div class="elastic-builder-rule">
+  <select class="form-control" data-ng-model="rule.field" data-ng-options="key as key for (key, value) in elasticFields"></select>
+
+  <span data-ng-if="elasticFields[rule.field].subType === 'boolean'">
+    Equals
+    <select data-ng-model="rule.value" class="form-control">
+      <option value="0">False</option>
+      <option value="1">True</option>
+    </select>
+  </span>
+  <span data-ng-if="elasticFields[rule.field].type === 'multi'">
+    <span data-ng-repeat="choice in elasticFields[rule.field].choices">
+      <label class="checkbox state">
+        <input type="checkbox" data-ng-model="rule.values[choice]">
+        {{ choice }}
+      </label>
+    </span>
+  </span>
+  <span data-ng-if="(elasticFields[rule.field].subType !== 'boolean' && elasticFields[rule.field].type !== 'multi')">
+    <select data-ng-model="rule.subType" class="form-control">
+      <!-- Range Options -->
+      <optgroup label="Numeral" data-ng-if="elasticFields[rule.field].type === 'number'">
+        <option value="equals">=</option>
+        <option value="gt">&gt;</option>
+        <option value="gte">&ge;</option>
+        <option value="lt">&lt;</option>
+        <option value="lte">&le;</option>
+      </optgroup>
+
+      <!-- Term Options -->
+      <optgroup label="Text" data-ng-if="elasticFields[rule.field].type === 'term'">
+        <option value="equals">Equals</option>
+        <option value="notEquals">! Equals</option>
+      </optgroup>
+
+      <!-- Generic Options -->
+      <optgroup label="Generic">
+        <option value="exists">Exists</option>
+        <option value="notExists">! Exists</option>
+      </optgroup>
+
+    </select>
+
+
+    <!-- Range Fields -->
+    <input class="form-control" data-ng-model="rule.value" type="number" data-ng-if="elasticFields[rule.field].type === 'number'">
+
+    <!-- Term Fields -->
+    <input class="form-control" data-ng-model="rule.value" type="text" data-ng-if="(['equals','notEquals'].indexOf(rule.subType) > -1) && (elasticFields[rule.field].type === 'term')">
+  </span>
+
+
+  <button class="btn btn-xs btn-danger remover" data-ng-click="onRemove()">
+    <i class="fa fa-minus"></i>
+  </button>
+
+</div>

@@ -1,0 +1,25 @@
+{
+  "name": "angular-elastic-builder",
+  "version": "1.0.0",
+  "description": "Angular Module for building an Elasticsearch Query",
+  "author": "Dan Crews <crewsd@gmail.com>",
+  "keywords": [
+    "angular",
+    "elasticsearch"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dncrews/angular-elastic-builder.git"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-angular-templatecache": "^1.6.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglifyjs": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

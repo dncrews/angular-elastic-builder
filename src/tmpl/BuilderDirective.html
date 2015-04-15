@@ -1,0 +1,20 @@
+<div class="elastic-builder">
+  <div class="filter-panels">
+    <div class="list-group form-inline">
+      <div
+        data-ng-repeat="filter in filters"
+        data-elastic-builder-chooser="filter"
+        data-elastic-fields="data.fields"
+        data-on-remove="removeChild($index)"
+        data-depth="0"></div>
+      <div class="list-group-item actions">
+        <button class="btn btn-xs btn-primary" title="Add Rule" data-ng-click="addRule()">
+          <i class="fa fa-plus"></i>
+        </button>
+        <button class="btn btn-xs btn-primary" title="Add Group" data-ng-click="addGroup()">
+          <i class="fa fa-list"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
