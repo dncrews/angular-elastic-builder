@@ -1,0 +1,21 @@
+{
+  "name": "angular-elastic-builder",
+  "homepage": "https://github.com/dncrews/angular-elastic-builder",
+  "authors": [
+    "Dan Crews <crewsd@gmail.com>"
+  ],
+  "description": "Angular Module for building an Elasticsearch Query",
+  "main": "dist/angular-elastic-builder.js",
+  "keywords": [
+    "elasticsearch",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

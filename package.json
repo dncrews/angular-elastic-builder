@@ -1,8 +1,9 @@
 {
   "name": "angular-elastic-builder",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Angular Module for building an Elasticsearch Query",
   "author": "Dan Crews <crewsd@gmail.com>",
+  "license": "MIT",
   "keywords": [
     "angular",
     "elasticsearch"
@@ -16,6 +17,7 @@
     "gulp": "^3.8.11",
     "gulp-angular-templatecache": "^1.6.0",
     "gulp-concat": "^2.5.2",
+    "gulp-header": "^1.2.2",
     "gulp-rename": "^1.2.2",
     "gulp-uglifyjs": "^0.6.1"
   },

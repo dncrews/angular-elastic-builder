@@ -3,6 +3,7 @@
  */
 var concat = require('gulp-concat')
   , del = require('del')
+  , header = require('gulp-header')
   , gulp = require('gulp')
   , templateCache = require('gulp-angular-templatecache')
   , rename = require('gulp-rename')
@@ -13,12 +14,23 @@ var concat = require('gulp-concat')
  * Local Dependencies
  */
 var pkg = require('./package.json');
+var banner = ['/**'
+  , ' * # <%= pkg.name %>'
+  , ' * ## <%= pkg.description %>'
+  , ' *'
+  , ' * @version v<%= pkg.version %>'
+  , ' * @link <%= pkg.repository.url %>'
+  , ' * @license <%= pkg.license %>'
+  , ' * @author <%= pkg.author %>'
+  , ' */'
+  , ''
+  , ''].join('\n');
 
-var filename = util.format('%s-%s.js', pkg.name, pkg.version)
+var filename = util.format('%s.js', pkg.name)
   , dest = 'dist/' + filename;
 
-gulp.task('build', ['concat', 'uglify']);
-gulp.task('default', ['concat', 'uglify']);
+gulp.task('build', ['concat', 'header', 'uglify']);
+gulp.task('default', ['concat', 'header', 'uglify']);
 
 
 gulp.task('clean', function(done) {
@@ -31,7 +43,13 @@ gulp.task('concat', [ 'clean', 'templatecache' ], function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('uglify', [ 'clean', 'concat' ], function() {
+gulp.task('header', [ 'concat' ], function() {
+  return gulp.src('./dist/*.js')
+    .pipe(header(banner, { pkg: pkg }))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('uglify', [ 'clean', 'concat', 'header' ], function() {
   return gulp.src('./dist/*.js')
     .pipe(uglify(dest.replace(/\.js$/, '.min.js')))
     .pipe(gulp.dest('./'));

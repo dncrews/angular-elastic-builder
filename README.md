@@ -119,7 +119,7 @@ Generic Options
 
 
 ## Local Development
-To work on this module locally, you will need to clone it and run `gulp watch`. This will ensure that your changes get compiled properly.
+To work on this module locally, you will need to clone it and run `gulp watch`. This will ensure that your changes get compiled properly. You will also need to make sure you run `gulp` to build the "dist" files before commit.
 
 
 [npm-image]: https://img.shields.io/npm/v/angular-elastic-builder.svg

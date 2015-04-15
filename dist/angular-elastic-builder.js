@@ -1,4 +1,14 @@
 /**
+ * # angular-elastic-builder
+ * ## Angular Module for building an Elasticsearch Query
+ *
+ * @version v1.1.0
+ * @link https://github.com/dncrews/angular-elastic-builder.git
+ * @license MIT
+ * @author Dan Crews <crewsd@gmail.com>
+ */
+
+/**
  * angular-elastic-builder
  *
  * /src/module.js
