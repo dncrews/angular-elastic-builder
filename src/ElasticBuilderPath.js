@@ -12,7 +12,7 @@
   angular.module('angular-elastic-builder')
     .factory('elasticBuilderPath', function elasticBuilderPath() {
 
-      var filename = angular.element('script[src*=ngElasticBuilder').eq(0).attr('src');
+      var filename = angular.element('script[src*=angular-elastic-builder').eq(0).attr('src');
 
       var parts = filename.split('/');
       parts.pop();
