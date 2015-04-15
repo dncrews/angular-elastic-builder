@@ -70,8 +70,6 @@
               if (! curr) return;
 
               data.query = elasticBuilderService.toQuery(scope.filters, scope.data.fields);
-
-              console.log(JSON.stringify(data.query, null, 2));
             }, true);
           }
         };

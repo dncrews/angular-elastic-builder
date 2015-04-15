@@ -110,9 +110,8 @@
 
         switch (fieldData.type) {
           case 'term':
-            console.log(fieldData);
             if (fieldData.subType === 'boolean') group.subType = 'boolean';
-            console.log(group.subType);
+
             if (! group.subType) return;
             if (group.value === undefined) return;
             switch (group.subType) {

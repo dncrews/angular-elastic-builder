@@ -128,8 +128,6 @@
               if (! curr) return;
 
               data.query = elasticBuilderService.toQuery(scope.filters, scope.data.fields);
-
-              console.log(JSON.stringify(data.query, null, 2));
             }, true);
           }
         };
@@ -360,9 +358,8 @@
 
         switch (fieldData.type) {
           case 'term':
-            console.log(fieldData);
             if (fieldData.subType === 'boolean') group.subType = 'boolean';
-            console.log(group.subType);
+
             if (! group.subType) return;
             if (group.value === undefined) return;
             switch (group.subType) {
