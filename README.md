@@ -19,7 +19,7 @@ Notice: this plugin requires the [Angular Recursion](https://github.com/marklage
 First you'll need to download the [dist](https://github.com/dncrews/angular-elastic-builder/tree/master/dist) files and include this JS file to your app (don't forget to substitute `x.x.x` with the current version number), along with the RecursionHelper, if you're not already using it.
 ```html
 <script type="text/javascript" src="/angular-recursion.min.js"></script>
-<script type="text/javascript" src="/angular-elastic-builder-x.x.x.min.js"></script>
+<script type="text/javascript" src="/angular-elastic-builder.min.js"></script>
 ```
 
 Then make sure that it's included in your app's dependencies during module creation.
