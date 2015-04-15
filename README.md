@@ -7,6 +7,8 @@
 This is an Angular.js directive for building an [Elasticsearch](https://www.elastic.co/) query.
 You just give it the fields and can generate a query for it. Its layout is defined using [Bootstrap](http://getbootstrap.com/) classes, but you may also choose to just style it yourself.
 
+It's still pretty early on, as it doesn't support a whole lot of use-cases, but we need to make it awesome. Contributions accepted.
+
 
 ## Usage
 
