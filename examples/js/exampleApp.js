@@ -60,6 +60,8 @@
       'test.state.multi': { type: 'multi', choices: [ 'AZ', 'CA', 'CT' ]}
     };
 
+    data.needsUpdate = true;
+
     this.showQuery = function() {
       var queryToShow = {
         size: 0,

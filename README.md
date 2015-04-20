@@ -121,6 +121,12 @@ Generic Options
   - In addition to any specific options for fields, all fields also get a "Exists" and "! Exists" option
 
 
+## External Changes && Initial State
+If you want to pass in an initial state (or if you make changes to the query externally), you'll need to
+set the configuration flag `needsUpdate` to `true`. Any time this flag changes to `true`, this directive
+will overwrite the current state and data with whatever is now defined in your configuration object.
+
+
 ## Local Development
 To work on this module locally, you will need to clone it and run `gulp watch`. This will ensure that your changes get compiled properly. You will also need to make sure you run `gulp` to build the "dist" files before commit.
 

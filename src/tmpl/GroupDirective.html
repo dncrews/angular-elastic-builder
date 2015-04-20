@@ -14,15 +14,15 @@
     data-on-remove="removeChild($index)"></div>
 
   <div class="list-group-item actions" data-ng-class="getGroupClassName()">
-    <button class="btn btn-xs btn-primary" title="Add Sub-Rule" data-ng-click="addRule()">
+    <a class="btn btn-xs btn-primary" title="Add Sub-Rule" data-ng-click="addRule()">
       <i class="fa fa-plus"></i>
-    </button>
-    <button class="btn btn-xs btn-primary" title="Add Sub-Group" data-ng-click="addGroup()">
+    </a>
+    <a class="btn btn-xs btn-primary" title="Add Sub-Group" data-ng-click="addGroup()">
       <i class="fa fa-list"></i>
-    </button>
+    </a>
   </div>
 
-  <button class="btn btn-xs btn-danger remover" data-ng-click="onRemove()">
+  <a class="btn btn-xs btn-danger remover" data-ng-click="onRemove()">
     <i class="fa fa-minus"></i>
-  </button>
+  </a>
 </div>

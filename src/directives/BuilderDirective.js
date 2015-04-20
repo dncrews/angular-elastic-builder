@@ -51,16 +51,15 @@
             };
 
             /**
-             * this Watcher gets used only once on initial setting of the query and then not again
+             * Any time "outside forces" change the query, they should tell us so via
+             * `data.needsUpdate`
              */
-            var unwatcher = scope.$watch('data.query', function(curr) {
+            scope.$watch('data.needsUpdate', function(curr, prev) {
               if (! curr) return;
 
               scope.filters = elasticQueryService.toFilters(data.query, scope.data.fields);
-
-              /* Stop Watching */
-              unwatcher();
-            }, true);
+              scope.data.needsUpdate = false;
+            });
 
             /**
              * Changes on the page update the Query
