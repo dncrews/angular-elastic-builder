@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Angular-elastic-builder by dncrews</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Angular-elastic-builder</h1>
+        <p>This is an Angular.js directive for building an Elasticsearch query. You just give it the fields and can generate a query for it.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/dncrews/angular-elastic-builder" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/dncrews/angular-elastic-builder/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/dncrews/angular-elastic-builder/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a id="angular-elasticsearch-query-builder" class="anchor" href="#angular-elasticsearch-query-builder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Angular Elasticsearch Query Builder</h1>
+
+<p><a href="https://www.npmjs.org/package/angular-elastic-builder"><img src="https://img.shields.io/npm/v/angular-elastic-builder.svg" alt="NPM version"></a>
+<img src="https://img.shields.io/bower/v/angular-elastic-builder.svg" alt="Bower version">
+<a href="https://www.npmjs.org/package/angular-elastic-builder"><img src="https://img.shields.io/npm/dm/angular-elastic-builder.svg" alt="Downloads"></a>
+<a href="https://www.gratipay.com/dncrews/"><img src="https://img.shields.io/gratipay/dncrews.svg" alt="Tips"></a></p>
+
+<p>This is an Angular.js directive for building an <a href="https://www.elastic.co/">Elasticsearch</a> query.
+You just give it the fields and can generate a query for it. Its layout is defined using <a href="http://getbootstrap.com/">Bootstrap</a> classes, but you may also choose to just style it yourself.</p>
+
+<p>It's still pretty early on, as it doesn't support a whole lot of use-cases, but we need to make it awesome. Contributions accepted.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="dependency" class="anchor" href="#dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependency</h3>
+
+<p>Notice: this plugin requires the <a href="https://github.com/marklagendijk/angular-recursion">Angular Recursion</a> module.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>First you'll need to download the <a href="https://github.com/dncrews/angular-elastic-builder/tree/master/dist">dist</a> files and include this JS file to your app (don't forget to substitute <code>x.x.x</code> with the current version number), along with the RecursionHelper, if you're not already using it.</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/angular-recursion.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/angular-elastic-builder.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>Then make sure that it's included in your app's dependencies during module creation.</p>
+
+<div class="highlight highlight-js"><pre>angularmodule(<span class="pl-s"><span class="pl-pds">'</span>appName<span class="pl-pds">'</span></span>, [ <span class="pl-s"><span class="pl-pds">'</span>angular-elastic-builder<span class="pl-pds">'</span></span> ]);</pre></div>
+
+<p>Then you can use it in your app</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c">/* Controller code */</span>
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * The elasticBuilderData object will be modified in place so that you can use</span>
+<span class="pl-c"> * your own $watch, and/or your own saving mechanism</span>
+<span class="pl-c"> */</span>
+$scope.elasticBuilderData <span class="pl-k">=</span> {};
+$scope.elasticBuilderData.query <span class="pl-k">=</span> [];
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * This object is the lookup for what fields</span>
+<span class="pl-c"> * are available in your database, as well as definitions of what kind</span>
+<span class="pl-c"> * of data they are</span>
+<span class="pl-c"> */</span>
+$scope.elasticBuilderData.fields <span class="pl-k">=</span> {
+  <span class="pl-s"><span class="pl-pds">'</span>some.number.field<span class="pl-pds">'</span></span><span class="pl-k">:</span> { type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span> },
+  <span class="pl-s"><span class="pl-pds">'</span>some.term.field<span class="pl-pds">'</span></span><span class="pl-k">:</span> { type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>term<span class="pl-pds">'</span></span> },
+  <span class="pl-s"><span class="pl-pds">'</span>some.boolean.field<span class="pl-pds">'</span></span><span class="pl-k">:</span> { type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>term<span class="pl-pds">'</span></span>, subType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>boolean<span class="pl-pds">'</span></span> },
+  <span class="pl-s"><span class="pl-pds">'</span>multi.selector<span class="pl-pds">'</span></span><span class="pl-k">:</span> { type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>multi<span class="pl-pds">'</span></span>, choices<span class="pl-k">:</span> [ <span class="pl-s"><span class="pl-pds">'</span>AZ<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>CA<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>CT<span class="pl-pds">'</span></span> ]}
+};</pre></div>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">data-elastic-builder</span>=<span class="pl-s"><span class="pl-pds">"</span>elasticBuilderData<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<p>The above elasticFields would allow you create the following form:
+<img src="https://raw.githubusercontent.com/dncrews/angular-elastic-builder/master/screenshot.png" alt="Screenshot"></p>
+
+<p>Which represents the following Elasticsearch Query:</p>
+
+<div class="highlight highlight-json"><pre>[
+  {
+    <span class="pl-s"><span class="pl-pds">"</span>terms<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>multi.selector<span class="pl-pds">"</span></span>: [
+        <span class="pl-s"><span class="pl-pds">"</span>AZ<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>CT<span class="pl-pds">"</span></span>
+      ]
+    }
+  },
+  {
+    <span class="pl-s"><span class="pl-pds">"</span>term<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>some.boolean.field<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>
+    }
+  },
+  {
+    <span class="pl-s"><span class="pl-pds">"</span>not<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>filter<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>term<span class="pl-pds">"</span></span>: {
+          <span class="pl-s"><span class="pl-pds">"</span>some.term.field<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello World<span class="pl-pds">"</span></span>
+        }
+      }
+    }
+  },
+  {
+    <span class="pl-s"><span class="pl-pds">"</span>and<span class="pl-pds">"</span></span>: [
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>range<span class="pl-pds">"</span></span>: {
+          <span class="pl-s"><span class="pl-pds">"</span>some.number.field<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>gte<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
+          }
+        }
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>range<span class="pl-pds">"</span></span>: {
+          <span class="pl-s"><span class="pl-pds">"</span>some.number.field<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>lt<span class="pl-pds">"</span></span>: <span class="pl-c1">100</span>
+          }
+        }
+      }
+    ]
+  }
+]</pre></div>
+
+<h3>
+<a id="field-options" class="anchor" href="#field-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Field Options</h3>
+
+<ul>
+<li>
+<code>type</code>: This determines how the fields are displayed in the form.
+
+<ul>
+<li>Currently supported:
+
+<ul>
+<li>
+<code>'number'</code>: in addition to Generic Options, gets "&gt;", "≥", "&lt;", "≤", "="</li>
+<li>
+<code>'term'</code>: in addition to Generic Options, gets "Equals" and "! Equals"</li>
+<li>
+<code>'boolean'</code>: Does not get Generic Options. Gets <code>true</code> and <code>false</code>
+
+<ul>
+<li>These are actually "equals 0" and "equals 1" for the database query</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>Generic Options</p>
+
+<ul>
+<li>In addition to any specific options for fields, all fields also get a "Exists" and "! Exists" option</li>
+</ul>
+
+<h2>
+<a id="local-development" class="anchor" href="#local-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Development</h2>
+
+<p>To work on this module locally, you will need to clone it and run <code>gulp watch</code>. This will ensure that your changes get compiled properly. You will also need to make sure you run <code>gulp</code> to build the "dist" files before commit.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/dncrews">dncrews</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
