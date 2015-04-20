@@ -185,6 +185,13 @@ $scope.elasticBuilderData.fields <span class="pl-k">=</span> {
 </ul>
 
 <h2>
+<a id="external-changes--initial-state" class="anchor" href="#external-changes--initial-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>External Changes &amp;&amp; Initial State</h2>
+
+<p>If you want to pass in an initial state (or if you make changes to the query externally), you'll need to
+set the configuration flag <code>needsUpdate</code> to <code>true</code>. Any time this flag changes to <code>true</code>, this directive
+will overwrite the current state and data with whatever is now defined in your configuration object.</p>
+
+<h2>
 <a id="local-development" class="anchor" href="#local-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Development</h2>
 
 <p>To work on this module locally, you will need to clone it and run <code>gulp watch</code>. This will ensure that your changes get compiled properly. You will also need to make sure you run <code>gulp</code> to build the "dist" files before commit.</p>
