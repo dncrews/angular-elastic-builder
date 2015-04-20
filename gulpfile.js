@@ -70,6 +70,7 @@ gulp.task('templatecache', function() {
     .pipe(gulp.dest('src/tmpl'));
 });
 
-gulp.task('watch', function() {
-  return gulp.watch('src/tmpl/*.html', [ 'templatecache' ]);
+gulp.task('watch', [ 'templatecache', 'build' ], function() {
+  gulp.watch('src/tmpl/*.html', [ 'templatecache' ]);
+  gulp.watch('src/**/**.js', [ 'build' ]);
 });
