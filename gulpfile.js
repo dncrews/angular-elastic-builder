@@ -29,15 +29,15 @@ var banner = ['/**'
 var filename = util.format('%s.js', pkg.name)
   , dest = 'dist/' + filename;
 
-gulp.task('build', ['concat', 'header', 'uglify']);
-gulp.task('default', ['concat', 'header', 'uglify']);
+gulp.task('build', ['uglify']);
+gulp.task('default', ['uglify']);
 
 
 gulp.task('clean', function(done) {
   del('./dist', done);
 });
 
-gulp.task('concat', [ 'clean', 'templatecache' ], function() {
+gulp.task('concat', [ 'templatecache' ], function() {
   return gulp.src(['./src/module.js', './src/**/*.js'])
     .pipe(concat(filename))
     .pipe(gulp.dest('./dist'));
@@ -49,17 +49,17 @@ gulp.task('header', [ 'concat' ], function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('uglify', [ 'clean', 'concat', 'header' ], function() {
+gulp.task('uglify', [ 'header' ], function() {
   return gulp.src('./dist/*.js')
     .pipe(uglify(dest.replace(/\.js$/, '.min.js')))
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('templatecache', function() {
+gulp.task('templatecache', [ 'clean' ], function() {
   var TEMPLATE_HEADER = '(function(angular) {"use strict"; angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {'
     , TEMPLATE_FOOTER = '}]);})(window.angular);';
 
-  return gulp.src('src/tmpl/*.html')
+  return gulp.src('src/tmpl/**/*.html')
     .pipe(templateCache({
       root: 'angular-elastic-builder',
       module: 'angular-elastic-builder',
@@ -71,6 +71,6 @@ gulp.task('templatecache', function() {
 });
 
 gulp.task('watch', [ 'templatecache', 'build' ], function() {
-  gulp.watch('src/tmpl/*.html', [ 'templatecache' ]);
-  gulp.watch('src/**/**.js', [ 'build' ]);
+  gulp.watch('src/tmpl/**/*.html', [ 'templatecache', 'build' ]);
+  gulp.watch(['src/**/**.js','!src/tmpl/ElasticBuilderTemplates.js'], [ 'build' ]);
 });

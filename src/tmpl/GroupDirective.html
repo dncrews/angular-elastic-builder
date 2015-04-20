@@ -13,7 +13,7 @@
     data-depth="{{ +depth + 1 }}"
     data-on-remove="removeChild($index)"></div>
 
-  <div class="list-group-item actions">
+  <div class="list-group-item actions" data-ng-class="getGroupClassName()">
     <button class="btn btn-xs btn-primary" title="Add Sub-Rule" data-ng-click="addRule()">
       <i class="fa fa-plus"></i>
     </button>

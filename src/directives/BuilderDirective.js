@@ -1,7 +1,7 @@
 /**
  * angular-elastic-builder
  *
- * /src/ElasticBuilderDirective.js
+ * /src/directives/BuilderDirective.js
  *
  * Angular Directive for injecting a query builder form.
  */
@@ -11,17 +11,16 @@
 
    angular.module('angular-elastic-builder')
     .directive('elasticBuilder', [
-      '$templateCache',
-      'elasticBuilderService',
+      'elasticQueryService',
 
-      function EB($templateCache, elasticBuilderService) {
+      function EB(elasticQueryService) {
 
         return {
           scope: {
             data: '=elasticBuilder',
           },
 
-          template: $templateCache.get('angular-elastic-builder/BuilderDirective.html'),
+          templateUrl: 'angular-elastic-builder/BuilderDirective.html',
 
           link: function(scope) {
             var data = scope.data;
@@ -57,7 +56,7 @@
             var unwatcher = scope.$watch('data.query', function(curr) {
               if (! curr) return;
 
-              scope.filters = elasticBuilderService.toFilters(data.query, scope.data.fields);
+              scope.filters = elasticQueryService.toFilters(data.query, scope.data.fields);
 
               /* Stop Watching */
               unwatcher();
@@ -69,7 +68,7 @@
             scope.$watch('filters', function(curr) {
               if (! curr) return;
 
-              data.query = elasticBuilderService.toQuery(scope.filters, scope.data.fields);
+              data.query = elasticQueryService.toQuery(scope.filters, scope.data.fields);
             }, true);
           }
         };

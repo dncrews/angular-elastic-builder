@@ -1,7 +1,7 @@
 /**
  * angular-elastic-builder
  *
- * /src/ElasticBuilderChooser.js
+ * /src/directives/Chooser.js
  *
  * This file is to help recursively, to decide whether to show a group or rule
  */
@@ -12,10 +12,10 @@
   var app = angular.module('angular-elastic-builder');
 
   app.directive('elasticBuilderChooser', [
-    '$templateCache',
     'RecursionHelper',
+    'groupClassHelper',
 
-    function elasticBuilderChooser($templateCache, RH) {
+    function elasticBuilderChooser(RH, groupClassHelper) {
 
       return {
         scope: {
@@ -24,7 +24,7 @@
           onRemove: '&',
         },
 
-        template: $templateCache.get('angular-elastic-builder/ChooserDirective.html'),
+        templateUrl: 'angular-elastic-builder/ChooserDirective.html',
 
         compile: function (element) {
           return RH.compile(element, function(scope, el, attrs) {
@@ -32,20 +32,10 @@
               , item = scope.item;
 
             scope.getGroupClassName = function() {
-              var levels = [
-                '',
-                'list-group-item-info',
-                'list-group-item-success',
-                'list-group-item-warning',
-                'list-group-item-danger',
-              ];
-
               var level = depth;
               if (item.type === 'group') level++;
 
-              level = level % levels.length;
-
-              return levels[level];
+              return groupClassHelper(level);
             };
           });
         }

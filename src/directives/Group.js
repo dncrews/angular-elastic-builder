@@ -1,7 +1,7 @@
 /**
  * angular-elastic-builder
  *
- * /src/ElasticBuilderGroup.js
+ * /src/directives/Group.js
  */
 
 (function(angular) {
@@ -10,10 +10,10 @@
   var app = angular.module('angular-elastic-builder');
 
   app.directive('elasticBuilderGroup', [
-    '$templateCache',
     'RecursionHelper',
+    'groupClassHelper',
 
-    function elasticBuilderGroup($templateCache, RH) {
+    function elasticBuilderGroup(RH, groupClassHelper) {
 
       return {
         scope: {
@@ -22,11 +22,11 @@
           onRemove: '&',
         },
 
-        template: $templateCache.get('angular-elastic-builder/GroupDirective.html'),
+        templateUrl: 'angular-elastic-builder/GroupDirective.html',
 
         compile: function(element) {
           return RH.compile(element, function(scope, el, attrs) {
-            scope.depth = (+ attrs.depth);
+            var depth = scope.depth = (+ attrs.depth);
             var group = scope.group;
 
             scope.addRule = function() {
@@ -42,6 +42,10 @@
 
             scope.removeChild = function(idx) {
               group.rules.splice(idx, 1);
+            };
+
+            scope.getGroupClassName = function() {
+              return groupClassHelper(depth + 1);
             };
           });
         }
