@@ -10,6 +10,8 @@ You just give it the fields and can generate a query for it. Its layout is defin
 
 It's still pretty early on, as it doesn't support a whole lot of use-cases, but we need to make it awesome. Contributions accepted.
 
+## Try it Out
+[View an example here](http://dncrews.com/angular-elastic-builder/examples/)
 
 ## Usage
 
