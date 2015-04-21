@@ -2,7 +2,7 @@
  * # angular-elastic-builder
  * ## Angular Module for building an Elasticsearch Query
  *
- * @version v1.3.1
+ * @version v1.3.2
  * @link https://github.com/dncrews/angular-elastic-builder.git
  * @license MIT
  * @author Dan Crews <crewsd@gmail.com>
@@ -52,6 +52,8 @@
           link: function(scope) {
             var data = scope.data;
 
+            scope.filters = [];
+
             /**
              * Removes either Group or Rule
              */
@@ -81,7 +83,7 @@
              * Any time "outside forces" change the query, they should tell us so via
              * `data.needsUpdate`
              */
-            scope.$watch('data.needsUpdate', function(curr, prev) {
+            scope.$watch('data.needsUpdate', function(curr) {
               if (! curr) return;
 
               scope.filters = elasticQueryService.toFilters(data.query, scope.data.fields);

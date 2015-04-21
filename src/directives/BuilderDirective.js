@@ -25,6 +25,8 @@
           link: function(scope) {
             var data = scope.data;
 
+            scope.filters = [];
+
             /**
              * Removes either Group or Rule
              */
@@ -54,7 +56,7 @@
              * Any time "outside forces" change the query, they should tell us so via
              * `data.needsUpdate`
              */
-            scope.$watch('data.needsUpdate', function(curr, prev) {
+            scope.$watch('data.needsUpdate', function(curr) {
               if (! curr) return;
 
               scope.filters = elasticQueryService.toFilters(data.query, scope.data.fields);
