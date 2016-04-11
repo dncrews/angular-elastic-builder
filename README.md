@@ -16,13 +16,16 @@ It's still pretty early on, as it doesn't support a whole lot of use-cases, but 
 ## Usage
 
 ### Dependency
-Notice: this plugin requires the [Angular Recursion](https://github.com/marklagendijk/angular-recursion) module.
+Notice: this plugin requires:
+    - the [Angular Recursion](https://github.com/marklagendijk/angular-recursion) module.
+    - the [Angular directives for Bootstrap](https://github.com/angular-ui/bootstrap) module to display the Calendar (ui.bootstrap.datepicker)
 
 ### Installation
 First you'll need to download the [dist](https://github.com/dncrews/angular-elastic-builder/tree/master/dist) files and include this JS file to your app (don't forget to substitute `x.x.x` with the current version number), along with the RecursionHelper, if you're not already using it.
 ```html
-<script type="text/javascript" src="/angular-recursion.min.js"></script>
-<script type="text/javascript" src="/angular-elastic-builder.min.js"></script>
+<script type="text/javascript" src="angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="angular-recursion/angular-recursion.min.js"></script>
+<script type="text/javascript" src="angular-elastic-builder/angular-elastic-builder.min.js"></script>
 ```
 
 Then make sure that it's included in your app's dependencies during module creation.
@@ -48,10 +51,12 @@ $scope.elasticBuilderData.query = [];
  * of data they are
  */
 $scope.elasticBuilderData.fields = {
-  'some.number.field': { type: 'number' },
-  'some.term.field': { type: 'term' },
-  'some.boolean.field': { type: 'term', subType: 'boolean' },
-  'multi.selector': { type: 'multi', choices: [ 'AZ', 'CA', 'CT' ]}
+ 'test.number': { type: 'number', minimum: 650 },
+ 'test.term': { type: 'term' },
+ 'test.boolean': { type: 'term', subType: 'boolean' },
+ 'test.state.multi': { type: 'multi', choices: [ 'AZ', 'CA', 'CT' ]},
+ 'test.date': { type: 'date' },
+ 'test.otherdate': { type: 'date' }
 };
 ```
 
@@ -61,49 +66,64 @@ $scope.elasticBuilderData.fields = {
 
 The above elasticFields would allow you create the following form:
 ![Screenshot][screenshot-image]
-
+ 
 Which represents the following Elasticsearch Query:
 ```json
 [
   {
-    "terms": {
-      "multi.selector": [
-        "AZ",
-        "CT"
-      ]
-    }
+    "and": [
+      {
+        "term": {
+          "test.date": "2016-04-08T10:44:06"
+        }
+      },
+      {
+        "range": {
+          "test.number": {
+            "gte": 650
+          }
+        }
+      },
+      {
+        "range": {
+          "test.number": {
+            "lt": 850
+          }
+        }
+      }
+    ]
   },
   {
     "term": {
-      "some.boolean.field": "0"
+      "test.boolean": 0
+    }
+  },
+  {
+    "terms": {
+      "test.state.multi": [ "AZ", "CT" ]
     }
   },
   {
     "not": {
       "filter": {
         "term": {
-          "some.term.field": "Hello World"
+          "test.term": "asdfasdf"
         }
       }
     }
   },
   {
-    "and": [
-      {
-        "range": {
-          "some.number.field": {
-            "gte": 0
-          }
-        }
-      },
-      {
-        "range": {
-          "some.number.field": {
-            "lt": 100
-          }
-        }
+    "exists": {
+      "field": "test.term"
+    }
+  },
+  {
+    "range": {
+      "test.otherdate": {
+        "gte": "now",
+        "lte": "now+7d"
       }
-    ]
+    }
   }
 ]
 ```
@@ -116,6 +136,7 @@ Which represents the following Elasticsearch Query:
       - `'term'`: in addition to Generic Options, gets "Equals" and "! Equals"
       - `'boolean'`: Does not get Generic Options. Gets `true` and `false`
         - These are actually "equals 0" and "equals 1" for the database query
+      - `'date'`: in addition to Generic Options, gets "&gt;", "&ge;", "&lt;", "&le;", "="
 
 Generic Options
   - In addition to any specific options for fields, all fields also get a "Exists" and "! Exists" option
@@ -138,4 +159,5 @@ To work on this module locally, you will need to clone it and run `gulp watch`. 
 [downloads-url]: https://www.npmjs.org/package/angular-elastic-builder
 [gratipay-image]: https://img.shields.io/gratipay/dncrews.svg
 [gratipay-url]: https://www.gratipay.com/dncrews/
-[screenshot-image]: https://raw.githubusercontent.com/dncrews/angular-elastic-builder/master/screenshot.png
+[screenshot-image]: https://cloud.githubusercontent.com/assets/6723310/14424743/c5701566-ffda-11e5-8204-9f4d46c5aec4.png
+
