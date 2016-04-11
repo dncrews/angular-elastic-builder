@@ -10,12 +10,14 @@
   'use strict';
 
   angular.module('angular-elastic-builder')
-    .factory('elasticQueryService', [
-      function() {
+    .factory('elasticQueryService', [ '$filter',
+      function($filter) {
 
         return {
           toFilters: toFilters,
-          toQuery: toQuery,
+          toQuery: function(filters, fieldMap){
+                     return toQuery(filters, fieldMap, $filter)
+                   },
         };
       }
     ]);
@@ -25,8 +27,8 @@
     return filters;
   }
 
-  function toQuery(filters, fieldMap){
-    var query = filters.map(parseFilterGroup.bind(filters, fieldMap)).filter(function(item) {
+  function toQuery(filters, fieldMap, $filter){
+    var query = filters.map(parseFilterGroup.bind(filters, fieldMap, $filter)).filter(function(item) {
       return !! item;
     });
     return query;
@@ -83,7 +85,30 @@
       case 'range':
         obj.field = Object.keys(group[key])[0];
         obj.subType = Object.keys(group[key][obj.field])[0];
-        obj.value = group[key][obj.field][obj.subType];
+        
+        if (angular.isNumber(group[key][obj.field][obj.subType])) {
+          obj.value = group[key][obj.field][obj.subType];
+
+        } else if (angular.isDefined(Object.keys(group[key][obj.field])[1])) {
+          var date = group[key][obj.field]['gte'];
+
+          if (date.indexOf('now-') > -1) {
+            obj.subType = 'last';
+            obj.value = parseInt(date.split('now-')[1].split('d')[0]);
+          } else if (date.indexOf('now') > -1) {
+            obj.subType = 'next';
+            date = group[key][obj.field]['lte'];
+            obj.value = parseInt(date.split('now+')[1].split('d')[0]);
+          } else {
+            obj.subType = 'equals';
+            var parts = date.split('T')[0].split('-');
+            obj.date = parts[2] + '/' + parts[1] + '/' + parts[0];
+          }
+        } else {
+          var date = group[key][obj.field][obj.subType];
+          var parts = date.split('T')[0].split('-');
+          obj.date = parts[2] + '/' + parts[1] + '/' + parts[0];
+        }
         break;
       case 'not':
         obj = parseQueryGroup(fieldMap, group[key].filter, false);
@@ -96,10 +121,10 @@
     return obj;
   }
 
-  function parseFilterGroup(fieldMap, group) {
+  function parseFilterGroup(fieldMap, $filter, group) {
     var obj = {};
     if (group.type === 'group') {
-      obj[group.subType] = group.rules.map(parseFilterGroup.bind(group, fieldMap)).filter(function(item) {
+      obj[group.subType] = group.rules.map(parseFilterGroup.bind(group, fieldMap, $filter)).filter(function(item) {
         return !! item;
       });
       return obj;
@@ -146,14 +171,50 @@
         break;
 
       case 'date':
-        if (group.subType === 'exists') {
-          obj.exists = { field: fieldName };
-        } else if (group.subType === 'notExists') {
-          obj.missing = { field: fieldName };
-        } else {
-          throw new Error('unexpected subtype');
+        if (! group.subType) return;
+        switch(group.subType) {
+          case 'equals':
+             if (!angular.isDate(group.date)) return;
+             obj.term = {};
+             obj.term[fieldName] = formatDate($filter, group.date, group.dateFormat);
+             break;
+          case 'lt':
+          case 'lte':
+             if (!angular.isDate(group.date)) return;
+             obj.range = {};
+             obj.range[fieldName] = {};
+             obj.range[fieldName][group.subType] = formatDate($filter, group.date, group.dateFormat);
+             break;
+          case 'gt':
+          case 'gte':
+             if (!angular.isDate(group.date)) return;
+             obj.range = {};
+             obj.range[fieldName] = {};
+             obj.range[fieldName][group.subType] = formatDate($filter, group.date, group.dateFormat);
+             break;
+          case 'last':
+            if (!angular.isNumber(group.value)) return;
+             obj.range = {};
+             obj.range[fieldName] = {};
+             obj.range[fieldName]['gte'] = 'now-' + group.value + 'd';
+             obj.range[fieldName]['lte'] = 'now';
+             break;
+          case 'next':
+            if (!angular.isNumber(group.value)) return;
+             obj.range = {};
+             obj.range[fieldName] = {};
+             obj.range[fieldName]['gte'] = 'now';
+             obj.range[fieldName]['lte'] = 'now+' + group.value + 'd';
+             break;
+          case 'exists':
+            obj.exists = { field: fieldName };
+            break;
+          case 'notExists':
+            obj.missing = { field: fieldName };
+            break;
+          default:
+            throw new Error('unexpected subtype ' + group.subType);
         }
-
         break;
 
       case 'multi':
@@ -192,6 +253,12 @@
     };
 
     return angular.copy(templates[type]);
+  }
+
+  function formatDate($filter, date, dateFormat) {
+    if (!angular.isDate(date)) return false;
+    var fDate = $filter('date')(date, dateFormat);
+    return fDate;
   }
 
 })(window.angular);

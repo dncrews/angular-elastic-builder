@@ -1,10 +1,40 @@
-<span class="date-rule">
+<span class="date-rule form-inline">
   <select data-ng-model="rule.subType" class="form-control">
-
+    <optgroup label="Exact">
+      <option value="equals">=</option>
+    </optgroup>
+    <optgroup label="Unbounded-range">
+      <option value="lt">&lt;</option>
+      <option value="lte">&le;</option>
+      <option value="gt">&gt;</option>
+      <option value="gte">&ge;</option>
+    </optgroup>
+    <optgroup label="Bounded-range">
+      <option value="last">In the last</option>
+      <option value="next">In the next</option>
+    </optgroup>
     <optgroup label="Generic">
       <option value="exists">Exists</option>
       <option value="notExists">! Exists</option>
     </optgroup>
   </select>
+
+  <div class="form-group">
+    <div class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup={{rule.dateFormat}} data-ng-model="rule.date" is-open="popup1.opened" datepicker-options="dateOptions" data-ng-required="true" data-ng-if="inputNeeded()" close-text="Close" />
+      <div class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="open1()" data-ng-if="inputNeeded()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <span class="form-inline">
+    <div class="form-group">
+      <label data-ng-if="inputNeeded()">Format</label> 
+      <select class="form-control" ng-model="rule.dateFormat" data-ng-if="inputNeeded()" ng-options="f for f in formats"><option></option></select>
+    </div>
+  </span>
+
+  <span data-ng-if="numberNeeded()"><input type="number" class="form-control" data-ng-model="rule.value" min=0> days</span>
 
 </span>
