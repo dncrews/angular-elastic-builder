@@ -28,7 +28,7 @@
 
         compile: function (element) {
           return RH.compile(element, function(scope, el, attrs) {
-            var depth = scope.depth = (+ attrs.depth)
+            var depth = scope.depth = (+attrs.depth)
               , item = scope.item;
 
             scope.getGroupClassName = function() {
@@ -38,9 +38,9 @@
               return groupClassHelper(level);
             };
           });
-        }
+        },
       };
-    }
+    },
 
   ]);
 

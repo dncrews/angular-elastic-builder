@@ -10,7 +10,8 @@
   'use strict';
 
   angular.module('angular-elastic-builder', [
-    'RecursionHelper','ui.bootstrap'
+    'RecursionHelper',
+    'ui.bootstrap',
   ]);
 
 })(window.angular);

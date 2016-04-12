@@ -26,7 +26,7 @@
 
         compile: function(element) {
           return RH.compile(element, function(scope, el, attrs) {
-            var depth = scope.depth = (+ attrs.depth);
+            var depth = scope.depth = (+attrs.depth);
             var group = scope.group;
 
             scope.addRule = function() {
@@ -48,9 +48,9 @@
               return groupClassHelper(depth + 1);
             };
           });
-        }
+        },
       };
-    }
+    },
 
   ]);
 

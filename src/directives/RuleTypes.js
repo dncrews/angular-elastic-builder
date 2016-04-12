@@ -26,7 +26,7 @@
         link: function(scope) {
           scope.getTemplateUrl = function() {
             var type = scope.type;
-            if (! type) return;
+            if (!type) return;
 
             type = type.charAt(0).toUpperCase() + type.slice(1);
 
@@ -41,6 +41,7 @@
             var needs = [
               'equals',
               'notEquals',
+
               'gt',
               'gte',
               'lt',
@@ -59,74 +60,56 @@
             return ~needs.indexOf(scope.rule.subType);
           };
 
-        },
-
-        controller : function($scope) {
-
-          $scope.today = function() {
-            $scope.rule.date = new Date();
+          scope.today = function() {
+            scope.rule.date = new Date();
           };
-          $scope.today();
-          
-          $scope.clear = function() {
-            $scope.rule.date = null;
+          scope.today();
+
+          scope.clear = function() {
+            scope.rule.date = null;
           };
 
-          $scope.dateOptions = {
+          scope.dateOptions = {
             dateDisabled: disabled,
             formatYear: 'yy',
             maxDate: new Date(2018, 1, 13),
             minDate: new Date(),
-            startingDay: 1
+            startingDay: 1,
           };
 
           // Disable weekend selection
           function disabled(data) {
-            var date = data.date,
-              mode = data.mode;
+            var date = data.date
+              , mode = data.mode;
             return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
           }
 
-          $scope.open1 = function() {
-            $scope.popup1.opened = true;
+          scope.open1 = function() {
+            scope.popup1.opened = true;
           };
 
-          $scope.setDate = function(year, month, day) {
-            $scope.rule.date = new Date(year, month-1, day);
+          scope.setDate = function(year, month, day) {
+            scope.rule.date = new Date(year, month - 1, day);
           };
 
-          $scope.formats = ['yyyy-MM-ddTHH:mm:ss', 'yyyy-MM-ddTHH:mm:ssZ',  'yyyy-MM-dd', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
-          $scope.rule.dateFormat = $scope.formats[0];
-          $scope.format = $scope.rule.dateFormat;
+          scope.formats = [
+            'yyyy-MM-ddTHH:mm:ss',
+            'yyyy-MM-ddTHH:mm:ssZ',
+            'yyyy-MM-dd',
+            'dd-MMMM-yyyy',
+            'yyyy/MM/dd',
+            'shortDate',
+          ];
+          scope.rule.dateFormat = scope.formats[0];
+          scope.format = scope.rule.dateFormat;
 
-          $scope.altInputFormats = ['M!/d!/yyyy'];
+          scope.altInputFormats = ['M!/d!/yyyy'];
 
-          $scope.popup1 = {
-            opened: false
-          };
-
-          function getDayClass(data) {
-            var date = data.date,
-              mode = data.mode;
-            if (mode === 'day') {
-              var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-              for (var i = 0; i < $scope.events.length; i++) {
-                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-                if (dayToCheck === currentDay) {
-                  return $scope.events[i].status;
-                }
-              }
-            }
-
-            return '';
-          };
-
-        }
+          scope.popup1 = { opened: false };
+        },
 
       };
-    }
+    },
 
   ]);
 

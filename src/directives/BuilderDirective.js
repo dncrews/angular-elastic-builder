@@ -57,7 +57,7 @@
              * `data.needsUpdate`
              */
             scope.$watch('data.needsUpdate', function(curr) {
-              if (! curr) return;
+              if (!curr) return;
 
               scope.filters = elasticQueryService.toFilters(data.query, scope.data.fields);
               scope.data.needsUpdate = false;
@@ -67,13 +67,13 @@
              * Changes on the page update the Query
              */
             scope.$watch('filters', function(curr) {
-              if (! curr) return;
+              if (!curr) return;
 
               data.query = elasticQueryService.toQuery(scope.filters, scope.data.fields);
             }, true);
-          }
+          },
         };
-      }
+      },
 
     ]);
 

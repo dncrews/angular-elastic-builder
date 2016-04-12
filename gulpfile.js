@@ -9,7 +9,7 @@ var concat = require('gulp-concat')
   , rename = require('gulp-rename')
   , uglify = require('gulp-uglifyjs')
   , util = require('util')
-  , jshint = require('gulp-jshint');
+  , eslint = require('gulp-eslint');
 
 /**
  * Local Dependencies
@@ -72,9 +72,13 @@ gulp.task('templatecache', [ 'clean' ], function() {
 });
 
 gulp.task('lint', function() {
-  return gulp.src('src/**/**.js')
-    .pipe(jshint())
-      .pipe(jshint.reporter('jshint-stylish'));
+  return gulp.src([
+      'src/**/**.js',
+      '!src/tmpl/ElasticBuilderTemplates.js',
+    ])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('watch', [ 'templatecache', 'build' ], function() {

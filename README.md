@@ -17,8 +17,8 @@ It's still pretty early on, as it doesn't support a whole lot of use-cases, but 
 
 ### Dependency
 Notice: this plugin requires:
-    - the [Angular Recursion](https://github.com/marklagendijk/angular-recursion) module.
-    - the [Angular directives for Bootstrap](https://github.com/angular-ui/bootstrap) module to display the Calendar (ui.bootstrap.datepicker)
+  - the [Angular Recursion](https://github.com/marklagendijk/angular-recursion) module.
+  - the [Angular directives for Bootstrap](https://github.com/angular-ui/bootstrap) module to display the Calendar (ui.bootstrap.datepicker)
 
 ### Installation
 First you'll need to download the [dist](https://github.com/dncrews/angular-elastic-builder/tree/master/dist) files and include this JS file to your app (don't forget to substitute `x.x.x` with the current version number), along with the RecursionHelper, if you're not already using it.
@@ -66,7 +66,7 @@ $scope.elasticBuilderData.fields = {
 
 The above elasticFields would allow you create the following form:
 ![Screenshot][screenshot-image]
- 
+
 Which represents the following Elasticsearch Query:
 ```json
 [
@@ -159,5 +159,5 @@ To work on this module locally, you will need to clone it and run `gulp watch`. 
 [downloads-url]: https://www.npmjs.org/package/angular-elastic-builder
 [gratipay-image]: https://img.shields.io/gratipay/dncrews.svg
 [gratipay-url]: https://www.gratipay.com/dncrews/
-[screenshot-image]: https://cloud.githubusercontent.com/assets/6723310/14424743/c5701566-ffda-11e5-8204-9f4d46c5aec4.png
+[screenshot-image]: ./screenshot.png
 
