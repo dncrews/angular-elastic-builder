@@ -71,57 +71,57 @@ Which represents the following Elasticsearch Query:
 ```json
 [
   {
-    'and': [
+    "and": [
       {
-        'term': {
-          'test.date': '2016-04-08T10:44:06'
+        "term": {
+          "test.date": "2016-04-08T10:44:06"
         }
       },
       {
-        'range': {
-          'test.number': {
-            'gte': 650
+        "range": {
+          "test.number": {
+            "gte": 650
           }
         }
       },
       {
-        'range': {
-          'test.number': {
-            'lt': 850
+        "range": {
+          "test.number": {
+            "lt": 850
           }
         }
       }
     ]
   },
   {
-    'term': {
-      'test.boolean': 0
+    "term": {
+      "test.boolean": 0
     }
   },
   {
-    'terms': {
-      'test.state.multi': [ 'AZ', 'CT' ]
+    "terms": {
+      "test.state.multi": [ "AZ", "CT" ]
     }
   },
   {
-    'not': {
-      'filter': {
-        'term': {
-          'test.term': 'asdfasdf'
+    "not": {
+      "filter": {
+        "term": {
+          "test.term": "asdfasdf"
         }
       }
     }
   },
   {
-    'exists': {
-      'field': 'test.term'
+    "exists": {
+      "field": "test.term"
     }
   },
   {
-    'range': {
-      'test.otherdate': {
-        'gte': 'now',
-        'lte': 'now+7d'
+    "range": {
+      "test.otherdate": {
+        "gte": "now",
+        "lte": "now+7d"
       }
     }
   }
