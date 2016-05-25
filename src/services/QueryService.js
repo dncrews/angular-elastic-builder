@@ -72,7 +72,7 @@
           var vals = group[key][obj.field];
           if (typeof vals === 'string') vals = [ vals ];
           obj.values = fieldData.choices.reduce(function(prev, choice) {
-            prev[choice] = truthy === (~group[key][obj.field].indexOf(choice));
+            prev[choice] = (group[key][obj.field].indexOf(choice) != -1);
             return prev;
           }, {});
         } else {
