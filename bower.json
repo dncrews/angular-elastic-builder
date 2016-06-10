@@ -1,6 +1,7 @@
 {
   "name": "angular-elastic-builder",
   "homepage": "https://github.com/dncrews/angular-elastic-builder",
+  "version": "1.5.1",
   "authors": [
     "Dan Crews <crewsd@gmail.com>"
   ],
