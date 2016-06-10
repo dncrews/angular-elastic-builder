@@ -13,6 +13,7 @@
     "url": "https://github.com/dncrews/angular-elastic-builder.git"
   },
   "devDependencies": {
+    "angular-moment": "^0.10.3",
     "angular-recursion": "^1.0.5",
     "angular-ui-bootstrap": "^1.2.5",
     "del": "^1.2.1",
@@ -24,7 +25,8 @@
     "gulp-eslint": "^2.0.0",
     "gulp-header": "^1.2.2",
     "gulp-rename": "^1.2.2",
-    "gulp-uglifyjs": "^0.6.1"
+    "gulp-uglifyjs": "^0.6.1",
+    "moment": "^2.13.0"
   },
   "scripts": {
     "example": "node examples",

@@ -24,7 +24,7 @@
       <input data-ng-if="inputNeeded()"
         type="text"
         class="form-control"
-        data-uib-datepicker-popup="{{ rule.dateFormat }}"
+        data-uib-datepicker-popup="{{ rule.format }}"
         data-ng-model="rule.date"
         data-is-open="popup1.opened"
         data-datepicker-options="dateOptions"
@@ -43,14 +43,14 @@
       <label data-ng-if="inputNeeded()">Format</label>
       <select
         class="form-control"
-        data-ng-model="rule.dateFormat"
+        data-ng-model="rule.format"
         data-ng-if="inputNeeded()"
         ng-options="f for f in formats"></select>
     </div>
   </span>
 
   <span data-ng-if="numberNeeded()">
-    <input type="number" class="form-control" data-ng-model="rule.value" min=0> days
+    <input type="number" class="form-control" data-ng-if="rule.value ? rule.value = rule.value : rule.value = 1" data-ng-model="rule.value" min=0> days
   </span>
 
 </span>
