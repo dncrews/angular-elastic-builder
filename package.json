@@ -3,6 +3,10 @@
   "version": "1.5.1",
   "description": "Angular Module for building an Elasticsearch Query",
   "author": "Dan Crews <crewsd@gmail.com>",
+  "contributors": [{
+    "name": "Olivier Guennec",
+    "email": "oguennec@gmail.com"
+  }],
   "license": "MIT",
   "keywords": [
     "angular",
