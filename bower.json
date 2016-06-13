@@ -1,10 +1,16 @@
 {
   "name": "angular-elastic-builder",
+  "version": "1.5.2",
+  "description": "Angular Module for building an Elasticsearch Query",
   "homepage": "https://github.com/dncrews/angular-elastic-builder",
   "authors": [
-    "Dan Crews <crewsd@gmail.com>"
+    { "name": "Dan Crews", "email": "crewsd@gmail.com" },
+    { "name": "Olivier Guennec", "email": "oguennec@gmail.com" }
   ],
-  "description": "Angular Module for building an Elasticsearch Query",
+  "repository": {
+     "type": "git",
+     "url": "https://github.com/dncrews/angular-elastic-builder.git"
+  },
   "main": "dist/angular-elastic-builder.js",
   "keywords": [
     "elasticsearch",
@@ -17,5 +23,12 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "angular-moment": "^0.10.3",
+    "angular-recursion": "^1.0.5",
+    "angular-ui-bootstrap": "^1.3.3",
+    "express": "^4.13.4",
+    "moment": "^2.13.0"
+  }
 }
