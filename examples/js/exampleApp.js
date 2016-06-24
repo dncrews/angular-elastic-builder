@@ -13,7 +13,8 @@
         'and': [
           {
             'term': {
-              'test.date': '2016-04-08T09:16:48'
+              "test.date": "2016-04-07T23:59:59",
+              "format": "yyyy-MM-ddTHH:mm:ss"
             }
           },
           {
@@ -25,8 +26,9 @@
           },
           {
             'range': {
-              'test.number': {
-                'lt': 850
+              'test.otherdate': {
+                "lt": "2016/04/07",
+                "format": "yyyy/MM/dd"
               }
             }
           }
@@ -59,8 +61,8 @@
       {
         'range': {
           'test.otherdate': {
-            'gte': 'now',
-            'lte': 'now+7d'
+            "gte": "now-7d",
+            "lte": "now"
           }
         }
       }

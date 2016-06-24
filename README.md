@@ -19,11 +19,14 @@ It's still pretty early on, as it doesn't support a whole lot of use-cases, but 
 Notice: this plugin requires:
   - the [Angular Recursion](https://github.com/marklagendijk/angular-recursion) module.
   - the [Angular directives for Bootstrap](https://github.com/angular-ui/bootstrap) module to display the Calendar (ui.bootstrap.datepicker)
+  - the [Angular Moment](https://github.com/urish/angular-moment) module.
 
 ### Installation
 First you'll need to download the [dist](https://github.com/dncrews/angular-elastic-builder/tree/master/dist) files and include this JS file to your app (don't forget to substitute `x.x.x` with the current version number), along with the RecursionHelper, if you're not already using it.
 ```html
 <script type="text/javascript" src="angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="moment/moment.js"></script>
+<script src="angular-moment/angular-moment.js"></script>
 <script type="text/javascript" src="angular-recursion/angular-recursion.min.js"></script>
 <script type="text/javascript" src="angular-elastic-builder/angular-elastic-builder.min.js"></script>
 ```

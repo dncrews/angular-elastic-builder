@@ -12,6 +12,8 @@
   angular.module('angular-elastic-builder', [
     'RecursionHelper',
     'ui.bootstrap',
+    'angularMoment'
   ]);
+  //angular.module('angular-elastic-builder').constant('moment', require('moment-timezone'));
 
 })(window.angular);
