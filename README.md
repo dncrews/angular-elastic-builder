@@ -60,6 +60,8 @@ $scope.elasticBuilderData.fields = {
 };
 ```
 
+You can optionally add a label to the fields option to change the select label.
+
 ```html
 <div data-elastic-builder="elasticBuilderData"></div>
 ```
